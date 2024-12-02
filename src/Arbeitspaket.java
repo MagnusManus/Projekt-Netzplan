@@ -1,6 +1,6 @@
 public class Arbeitspaket {
     private String name = "";
-    private int vorgang;
+    private int id;
     private int vorgaenger;
     private int fruehesterAnfangszeitpunkt;
     private int fruehesterEndzeitpunkt;
@@ -90,11 +90,11 @@ public class Arbeitspaket {
     }
 
     public void setFreierPuffer(int freierPuffer) {
-
+        this.freierPuffer = freierPuffer;
     }
 
-    public void setGesamtpuffer() {
-
+    public void setGesamtpuffer(int gesamtpuffer) {
+        this.gesamtpuffer = gesamtpuffer;
     }
 
     //getter überladen für Berechnungen
