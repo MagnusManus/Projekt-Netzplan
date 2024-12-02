@@ -19,11 +19,7 @@ public class Arbeitspaket {
         this.dauer = dauer;
     }
 
-    public Arbeitspaket(String name, int dauer, int vorgaenger) {
-        this.name = name;
-        this.dauer = dauer;
-        this.vorgaenger = vorgaenger;
-    }
+
 
     public Arbeitspaket(String name, int dauer, int vorgaenger, int vorgaenger2) {
         this.name = name;
