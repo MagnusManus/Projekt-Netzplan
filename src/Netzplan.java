@@ -14,7 +14,6 @@ public class Netzplan {
         try
                 (FileInputStream fis = new FileInputStream("/home/manuelpalluotto/Downloads/arbeitspaket");
                  ObjectInputStream ois = new ObjectInputStream(fis);) {
-
             listeDerArbeitsPakete = (ArrayList) ois.readObject();
         } catch (IOException ioe) {
             ioe.printStackTrace();
