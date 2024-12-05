@@ -9,10 +9,10 @@ public class Netzplan {
     }
 
 
-    public static void arbeitspaketeAbrufen() {
+    public void arbeitspaketeAbrufen() {
         ArrayList<Arbeitspaket> listeDerArbeitsPakete = null;
         try
-                (FileInputStream fis = new FileInputStream("/home/oliverkirsch/Downloads/arbeitspaketeDaten/arbeitspaket");
+                (FileInputStream fis = new FileInputStream("/home/manuelpalluotto/Downloads/arbeitspaket");
                  ObjectInputStream ois = new ObjectInputStream(fis);) {
 
             listeDerArbeitsPakete = (ArrayList) ois.readObject();
