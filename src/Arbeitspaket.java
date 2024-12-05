@@ -1,114 +1,68 @@
-public class Arbeitspaket {
-    private String name = "";
+import java.io.Serializable;
+import java.util.ArrayList;
+
+public class Arbeitspaket implements Serializable {
     private int id;
-    private int vorgaenger;
-    private int fruehesterAnfangszeitpunkt;
-    private int fruehesterEndzeitpunkt;
-    private int spaetesterAnfangszeitpunkt;
-    private int spaetesterEndzeitpunkt;
-    private int gesamtpuffer;
-    private int freierPuffer;
-    private int dauer;
-    private int vorgaenger2;
-    private int vorgaenger3;
+    private  String name;
+    private  int dauer;
+    private  ArrayList<Integer> vorgaengerliste = new ArrayList<>();
 
-
-
-    public Arbeitspaket(String name, int dauer) {
-        this.name = name;
-        this.dauer = dauer;
-    }
-
-    public Arbeitspaket(String name, int dauer, int vorgaenger) {
-        this.name = name;
-        this.dauer = dauer;
-        this.vorgaenger = vorgaenger;
-    }
-
-
-    public Arbeitspaket(String name, int dauer, int vorgaenger, int vorgaenger2) {
-        this.name = name;
-        this.dauer = dauer;
-        this.vorgaenger = vorgaenger;
-        this.vorgaenger2 = vorgaenger2;
-    }
-
-    public Arbeitspaket(String name, int dauer, int vorgaenger, int vorgaenger2, int vorgaenge3) {
-        this.name = name;
-        this.dauer = dauer;
-        this.vorgaenger = vorgaenger;
-        this.vorgaenger2 = vorgaenger2;
-        this.vorgaenger3 = vorgaenge3;
-    }
-
-    public int getVorgaenger() {
-        return vorgaenger;
-    }
-
-
-    public int getFruehesterAnfangszeitpunkt() {
-        return fruehesterAnfangszeitpunkt;
-    }
-
-    public int getFruehesterEndzeitpunkt() {
-        return fruehesterEndzeitpunkt;
-    }
-
-    public int getSpaetesterAnfangszeitpunkt() {
-        return spaetesterAnfangszeitpunkt;
-    }
-
-    public int getSpaetesterEndzeitpunkt() {
-        return spaetesterEndzeitpunkt;
-    }
-
-    public int getGesamtpuffer() {
-        return gesamtpuffer;
-    }
-
-    public int getFreierPuffer() {
-        return freierPuffer;
-    }
-
+    //--------------------------------------------------------------------------------------Getter und Setter
     public String getName() {
         return name;
     }
 
-    public void setFruehesterAnfangszeitpunkt(int fruehesterAnfangszeitpunkt) {
-        this.fruehesterAnfangszeitpunkt = fruehesterAnfangszeitpunkt;
+    public void setName(String name) {
+        this.name = name;
     }
 
-    public void setFruehesterEndzeitpunkt(int fruehesterEndzeitpunkt) {
-        this.fruehesterEndzeitpunkt = fruehesterEndzeitpunkt;
+    public int getDauer() {
+        return dauer;
     }
 
-    public void setSpaetesterAnfangszeitpunkt(int spaetesterAnfangszeitpunkt) {
-        this.spaetesterAnfangszeitpunkt = spaetesterAnfangszeitpunkt;
+    public void setDauer(int dauer) {
+        this.dauer = dauer;
     }
 
-    public void setSpaetesterEndzeitpunkt(int spaetesterEndzeitpunkt) {
-        this.spaetesterEndzeitpunkt = spaetesterEndzeitpunkt;
+    public ArrayList<Integer> getVorgaengerliste() {
+        return vorgaengerliste;
     }
 
-    public void setFreierPuffer(int freierPuffer) {
-        this.freierPuffer = freierPuffer;
+    public void setVorgaengerliste(ArrayList<Integer> vorgaengerliste) {
+        this.vorgaengerliste = vorgaengerliste;
+    }
+//---------------------------------------------------------------------------------------Konstruktor---
+
+    public Arbeitspaket(String name, int dauer,ArrayList<Integer> vorgaengerliste) {
+
+    }
+    public Arbeitspaket(){
+
     }
 
-    public void setGesamtpuffer(int gesamtpuffer) {
-        this.gesamtpuffer = gesamtpuffer;
+    //------------------------------------------------------------------------------
+
+
+    public  String toSTring(){
+
+        String s = "Name: " + getName() + "Dauer: " + getDauer() + "Vorgänger: " + getVorgaengerliste().toString();
+        return s;
     }
 
-    //getter überladen für Berechnungen
-    public int getFruehesterAnfangszeitpunkt(int a, int b, int c) {
-        return Math.max(Math.max(a, b), c);
+    public static Arbeitspaket erstelleAp(final String name, final int dauer, final ArrayList<Integer> vorgaengerliste){
+        Arbeitspaket arbeitspaket = new Arbeitspaket();
+
+        arbeitspaket.setName(name);
+        arbeitspaket.setDauer(dauer);
+        arbeitspaket.setVorgaengerliste(vorgaengerliste);
+        return arbeitspaket;
     }
 
-    public int getFruehesterAnfangszeitpunkt(int a, int b) {
-        return Math.max(a, b);
-    }
 
-    public int getFruehesterAnfangszeitpunkt(int a) {
-        return a;
-    }
+
+
+
+
+
 
 }
