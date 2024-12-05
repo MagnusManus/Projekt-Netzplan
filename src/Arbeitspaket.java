@@ -5,7 +5,7 @@ public class Arbeitspaket implements Serializable {
     private int id;
     private  String name;
     private  int dauer;
-    private  ArrayList<Integer> vorgaengerliste = new ArrayList<>();
+    private  ArrayList<Arbeitspaket> vorgaengerliste = new ArrayList<>();
 
     //--------------------------------------------------------------------------------------Getter und Setter
     public String getName() {
@@ -24,11 +24,11 @@ public class Arbeitspaket implements Serializable {
         this.dauer = dauer;
     }
 
-    public ArrayList<Integer> getVorgaengerliste() {
+    public ArrayList<Arbeitspaket> getVorgaengerliste() {
         return vorgaengerliste;
     }
 
-    public void setVorgaengerliste(ArrayList<Integer> vorgaengerliste) {
+    public void setVorgaengerliste(ArrayList<Arbeitspaket> vorgaengerliste) {
         this.vorgaengerliste = vorgaengerliste;
     }
 //---------------------------------------------------------------------------------------Konstruktor---
@@ -49,7 +49,7 @@ public class Arbeitspaket implements Serializable {
         return s;
     }
 
-    public static Arbeitspaket erstelleAp(final String name, final int dauer, final ArrayList<Integer> vorgaengerliste){
+    public static Arbeitspaket erstelleAp(final String name, final int dauer, final ArrayList<Arbeitspaket> vorgaengerliste){
         Arbeitspaket arbeitspaket = new Arbeitspaket();
 
         arbeitspaket.setName(name);
