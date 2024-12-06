@@ -5,6 +5,8 @@ import java.util.Scanner;
 
 public class Arbeitspaket implements Serializable {
     private Netzplan netzplan;
+    private int FAZ;
+    private int FEZ;
     private int id;
     private String name;
     private int dauer;
@@ -31,6 +33,27 @@ public class Arbeitspaket implements Serializable {
     public ArrayList<Arbeitspaket> getVorgaengerliste() {
         return vorgaengerliste;
     }
+
+    public int getFAZ() {
+        return FAZ;
+    }
+
+    public void setFAZ(int FAZ) {
+        this.FAZ = FAZ;
+    }
+
+    public int getFEZ() {
+        return FEZ;
+    }
+
+    public void setFEZ() {
+        FEZ = FAZ + dauer;
+    }
+    public void setFEZ(int fez) {
+        this.FEZ = fez;
+    }
+
+
 
 //---------------------------------------------------------------------------------------Konstruktor---
 
@@ -60,4 +83,34 @@ public class Arbeitspaket implements Serializable {
 
         return sb.toString();
     }
+
+    public void berechneFAZundFEZ() {
+        if (vorgaengerliste.isEmpty()) {
+            // Kein Vorgänger, FAZ ist 0
+            this.FAZ = 0;
+        } else {
+            // Der FAZ ist das höchste FEZ aller Vorgänger
+            int maxFEZ = 0;
+            for (Arbeitspaket vorgaenger : vorgaengerliste) {
+                if (vorgaenger.getFEZ() > maxFEZ) {
+                    maxFEZ = vorgaenger.getFEZ();
+                }
+            }
+            this.FAZ = maxFEZ;
+        }
+        // FEZ = FAZ + Dauer
+        this.FEZ = this.FAZ + this.dauer;
+    }
+
+    public void berechneNetzplan() {
+        for (Arbeitspaket arbeitspaket : arbeitspaketeListe) {
+            arbeitspaket.berechneFAZundFEZ();
+        }
+    }
+
+
+
+
+
+
 }

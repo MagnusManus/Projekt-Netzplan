@@ -1,7 +1,7 @@
+import java.lang.reflect.Array;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Scanner;
-
-import static java.lang.System.in;
 
 public class Main {
     private Scanner sc;
@@ -64,10 +64,8 @@ public class Main {
 
                     for (int j = 0; j < arbeitspaketeListe.size(); j++) {
 
-
                         if (vorgaenger.equals(arbeitspaketeListe.get(j).getName())) {
                             nextArbeitspaket.getVorgaengerliste().add(arbeitspaketeListe.get(j));
-                            //System.out.println("Vorgänger gefunden und hinzugefügt: " + vorgaenger);
                         }
                     }
                 }
@@ -77,6 +75,17 @@ public class Main {
                 break;
             }
         }
-    }
+        System.out.println("Berechnung des Netzplans wird durchgeführt...");
 
+        arbeitspaket.berechneNetzplan();
+
+        System.out.println("Alle Arbeitspakete mit berechneten FAZ und FEZ:");
+
+        for (Arbeitspaket ap : arbeitspaketeListe) {
+            System.out.printf("Name: %s, FAZ: %d, FEZ: %d%n", ap.getName(), ap.getFAZ(), ap.getFEZ());
+        }
+
+    }
 }
+
+
