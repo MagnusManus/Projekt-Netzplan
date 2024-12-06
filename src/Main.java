@@ -1,18 +1,15 @@
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.ObjectOutputStream;
 import java.util.ArrayList;
-import java.util.InputMismatchException;
 import java.util.Scanner;
-import java.util.logging.ErrorManager;
+
+import static java.lang.System.in;
 
 public class Main {
     private Scanner sc;
     private String name;
     private int dauer;
-    private ArrayList<Arbeitspaket> vorgaenger;
-    private int anzahlvorgaenger;
+    private ArrayList<Arbeitspaket> vorgaengerListe;
+    private int anzahlVorgaenger;
+    private ArrayList<Arbeitspaket> arbeitspaketeListe;
 
     public static void main(String[] args) {
         new Main();
@@ -20,7 +17,8 @@ public class Main {
 
 
     public Main() {
-        vorgaenger = new ArrayList<>();
+        arbeitspaketeListe = new ArrayList<>();
+        vorgaengerListe = new ArrayList<>();
         sc = new Scanner(System.in);
         System.out.println("Bitte geben Sie den Namen des Arbeitspakets ein.");
         name = sc.nextLine();
@@ -28,30 +26,46 @@ public class Main {
         Arbeitspaket arbeitspaket = new Arbeitspaket();
         arbeitspaket.setName(name);
 
-        sc.next();
-
         System.out.println("Bitte geben Sie die Dauer des Arbeitspakets ein.");
         dauer = sc.nextInt();
         arbeitspaket.setDauer(dauer);
+        sc.nextLine(); // Puffer leeren
+        arbeitspaketeListe.add(arbeitspaket);
 
-        sc.next();
+        System.out.println(arbeitspaket.toString());
 
-        System.out.println("Von wie vielen Arbeitspaketen (Vorgängern) hängt dieses Arbeitspaket ab?");
-        anzahlvorgaenger = sc.nextInt();
+        System.out.println("Gibt es weitere Arbeitspakete? (j / n)");
+        if (sc.nextLine().equals("j")) {
 
-        sc.next();
+            Arbeitspaket nextArbeitspaket = new Arbeitspaket();
+            arbeitspaketeListe.add(nextArbeitspaket);
 
-        System.out.println("Nennen Sie den/ die Vorgänger: ");
-        for (int i = 0; i < anzahlvorgaenger; i++) {
-            System.out.printf("Noch %d Eingaben erwartet..." + "\n", anzahlvorgaenger - i);
+            System.out.println("Bitte geben Sie den Namen des Arbeitspakets ein.");
+            nextArbeitspaket.setName(sc.nextLine());
 
+            System.out.println("Bitte geben Sie die Dauer des Arbeitspakets ein.");
+            nextArbeitspaket.setDauer(sc.nextInt());
+            sc.nextLine();
+
+            System.out.printf("Von wie vielen Arbeitspaketen (Vorgänger) hängt %s ab?" + "\n", nextArbeitspaket.getName());
+            anzahlVorgaenger = sc.nextInt();
+            sc.nextLine();
+
+            System.out.println("Von WELCHEN Arbeitspaketen hängt dieses ab?");
+
+            for (int i = 0; i < anzahlVorgaenger; i++) {
+                System.out.printf("Es werden noch %d Eingaben erwartet...", anzahlVorgaenger - i);
+                String vorgaenger = sc.nextLine();
+
+
+                for (int j = 0; j < arbeitspaketeListe.size(); j++) {
+                    if (vorgaenger.equals(arbeitspaketeListe.get(j).getName())) {
+                        nextArbeitspaket.getVorgaengerliste().add(arbeitspaketeListe.get(j));
+                    }
+                }
+            }
+            System.out.println(nextArbeitspaket.toString());
+            }
         }
 
-
-
-
-
-
-
     }
-}

@@ -47,10 +47,10 @@ public class Arbeitspaket implements Serializable{
 
     //------------------------------------------------------------------------------
 
+    @Override
+    public String toString() {
 
-    public String toSTring() {
-
-        String s = "Name: " + getName() + "Dauer: " + getDauer() + "Vorgänger: " + getVorgaengerliste().toString();
+        String s = "Name:" + "\t" + "\t" + getName() + "\n" +  "Dauer:" + "\t" + "\t" + getDauer() + "\n" + "Vorgänger:" + "\t" + this.getVorgaengerliste().toString();
         return s;
     }
 
