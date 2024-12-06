@@ -7,7 +7,6 @@ public class Main {
     private Scanner sc;
     private String name;
     private int dauer;
-    private ArrayList<Arbeitspaket> vorgaengerListe;
     private int anzahlVorgaenger;
     private ArrayList<Arbeitspaket> arbeitspaketeListe;
 
@@ -18,8 +17,10 @@ public class Main {
 
     public Main() {
         arbeitspaketeListe = new ArrayList<>();
-        vorgaengerListe = new ArrayList<>();
+
         sc = new Scanner(System.in);
+
+
         System.out.println("Bitte geben Sie den Namen des Arbeitspakets ein.");
         name = sc.nextLine();
 
@@ -29,43 +30,53 @@ public class Main {
         System.out.println("Bitte geben Sie die Dauer des Arbeitspakets ein.");
         dauer = sc.nextInt();
         arbeitspaket.setDauer(dauer);
+
         sc.nextLine(); // Puffer leeren
+
         arbeitspaketeListe.add(arbeitspaket);
 
         System.out.println(arbeitspaket.toString());
 
-        System.out.println("Gibt es weitere Arbeitspakete? (j / n)");
-        if (sc.nextLine().equals("j")) {
 
-            Arbeitspaket nextArbeitspaket = new Arbeitspaket();
-            arbeitspaketeListe.add(nextArbeitspaket);
+        while (true) {
+            System.out.println("Gibt es weitere Arbeitspakete? (j / n)");
+            if (sc.nextLine().equals("j")) {
 
-            System.out.println("Bitte geben Sie den Namen des Arbeitspakets ein.");
-            nextArbeitspaket.setName(sc.nextLine());
+                Arbeitspaket nextArbeitspaket = new Arbeitspaket();
+                arbeitspaketeListe.add(nextArbeitspaket);
 
-            System.out.println("Bitte geben Sie die Dauer des Arbeitspakets ein.");
-            nextArbeitspaket.setDauer(sc.nextInt());
-            sc.nextLine();
+                System.out.println("Bitte geben Sie den Namen des Arbeitspakets ein.");
+                nextArbeitspaket.setName(sc.nextLine());
 
-            System.out.printf("Von wie vielen Arbeitspaketen (Vorgänger) hängt %s ab?" + "\n", nextArbeitspaket.getName());
-            anzahlVorgaenger = sc.nextInt();
-            sc.nextLine();
+                System.out.println("Bitte geben Sie die Dauer des Arbeitspakets ein.");
+                nextArbeitspaket.setDauer(sc.nextInt());
+                sc.nextLine();
 
-            System.out.println("Von WELCHEN Arbeitspaketen hängt dieses ab?");
+                System.out.printf("Von wie vielen Arbeitspaketen (Vorgänger) hängt %s ab?" + "\n", nextArbeitspaket.getName());
+                anzahlVorgaenger = sc.nextInt();
+                sc.nextLine();
 
-            for (int i = 0; i < anzahlVorgaenger; i++) {
-                System.out.printf("Es werden noch %d Eingaben erwartet...", anzahlVorgaenger - i);
-                String vorgaenger = sc.nextLine();
+                System.out.println("Von WELCHEN Arbeitspaketen hängt dieses ab?");
+
+                for (int i = 0; i < anzahlVorgaenger; i++) {
+                    System.out.printf("Es werden noch %d Eingaben erwartet..." + "\n", anzahlVorgaenger - i);
+                    String vorgaenger = sc.nextLine();
+
+                    for (int j = 0; j < arbeitspaketeListe.size(); j++) {
 
 
-                for (int j = 0; j < arbeitspaketeListe.size(); j++) {
-                    if (vorgaenger.equals(arbeitspaketeListe.get(j).getName())) {
-                        nextArbeitspaket.getVorgaengerliste().add(arbeitspaketeListe.get(j));
+                        if (vorgaenger.equals(arbeitspaketeListe.get(j).getName())) {
+                            nextArbeitspaket.getVorgaengerliste().add(arbeitspaketeListe.get(j));
+                            //System.out.println("Vorgänger gefunden und hinzugefügt: " + vorgaenger);
+                        }
                     }
                 }
-            }
-            System.out.println(nextArbeitspaket.toString());
+                System.out.println(nextArbeitspaket.toString() + nextArbeitspaket.includingList());
+            } else {
+                System.out.println("Alle Arbeitspakete wurden erstellt. Viel Glück. Das Programm wird beendet...");
+                break;
             }
         }
-
     }
+
+}

@@ -3,13 +3,13 @@ import java.util.ArrayList;
 import java.util.InputMismatchException;
 import java.util.Scanner;
 
-public class Arbeitspaket implements Serializable{
+public class Arbeitspaket implements Serializable {
     private Netzplan netzplan;
     private int id;
     private String name;
     private int dauer;
     private ArrayList<Arbeitspaket> vorgaengerliste = new ArrayList<>();
-    private static ArrayList<Arbeitspaket> arbeitspaketeListe= new ArrayList();
+    private static ArrayList<Arbeitspaket> arbeitspaketeListe = new ArrayList();
 
     //--------------------------------------------------------------------------------------Getter und Setter
     public String getName() {
@@ -32,14 +32,7 @@ public class Arbeitspaket implements Serializable{
         return vorgaengerliste;
     }
 
-    public void setVorgaenger(Arbeitspaket arbeitspaket) {
-        this.vorgaengerliste.add(arbeitspaket);
-    }
 //---------------------------------------------------------------------------------------Konstruktor---
-
-    public Arbeitspaket(String name, int dauer, ArrayList<Integer> vorgaengerliste) {
-
-    }
 
     public Arbeitspaket() {
         this.vorgaengerliste = new ArrayList<>();
@@ -49,73 +42,22 @@ public class Arbeitspaket implements Serializable{
 
     @Override
     public String toString() {
-
-        String s = "Name:" + "\t" + "\t" + getName() + "\n" +  "Dauer:" + "\t" + "\t" + getDauer() + "\n" + "Vorgänger:" + "\t" + this.getVorgaengerliste().toString();
-        return s;
+        return String.format("Name:\t\t%s%nDauer:\t\t%d%n", name, dauer);
     }
 
-//    public static Arbeitspaket creatingAP(String name) {
-//        Arbeitspaket arbeitspaket = new Arbeitspaket();
-//        setName(name);
-//        return arbeitspaket;
-//    }
-
-    public void setCredentials(String name, int dauer) {
-        setName(name);
-        setDauer(dauer);
-    }
-
-    public void setCredentials(String name, int dauer, Arbeitspaket arbeitspaket) {
-        setName(name);
-        setDauer(dauer);
-        setVorgaenger(arbeitspaket);
-    }
-
-    public void setCredentials(String name, int dauer,Arbeitspaket arbeitspaket, Arbeitspaket arbeitspaket2) {
-        setName(name);
-        setDauer(dauer);
-        setVorgaenger(arbeitspaket);
-        setVorgaenger(arbeitspaket2);
-    }
-
-    public void setCredentials(String name, int dauer,Arbeitspaket arbeitspaket, Arbeitspaket arbeitspaket2, Arbeitspaket arbeitspaket3) {
-        setName(name);
-        setDauer(dauer);
-        setVorgaenger(arbeitspaket);
-        setVorgaenger(arbeitspaket2);
-        setVorgaenger(arbeitspaket3);
-    }
-
-
-    public void checkReadOrWrite() {
-        //Prüfung, ob der Nutzer APs anlegen oder bereits bestehende abrufen will
-        System.out.println("Möchten Sie Arbeitspakete anlegen (1) oder abrufen (2) ?");
-        Scanner scanner = new Scanner(System.in);
-        if ((scanner.nextLine().equals("2"))) {
-            netzplan.arbeitspaketeAbrufen();
-        } else {
-            System.out.println("Ein neues Arbeitspaket wird angelegt...");
+    public String includingList() {
+        if (vorgaengerliste.isEmpty()) {
+            return String.format("Das Arbeitspaket %s hat keine Vorgänger.\n", this.name);
         }
+
+        StringBuilder sb = new StringBuilder(
+                String.format("Das Arbeitspaket %s ist abhängig von folgenden Arbeitspaketen:\n", this.name)
+        );
+
+        for (Arbeitspaket arbeitspaket : vorgaengerliste) {
+            sb.append("- ").append(arbeitspaket.getName()).append("\n");
+        }
+
+        return sb.toString();
     }
-
-
-    public ArrayList<Arbeitspaket> setVorgaengerInListe(Arbeitspaket arbeitspaket) {
-        this.vorgaengerliste.add(arbeitspaket);
-        return vorgaengerliste;
-    }
-
-    public ArrayList<Arbeitspaket> setVorgaengerInListe(Arbeitspaket arbeitspaket, Arbeitspaket arbeitspaket2) {
-        this.vorgaengerliste.add(arbeitspaket);
-        this.vorgaengerliste.add(arbeitspaket2);
-        return vorgaengerliste;
-    }
-
-    public ArrayList<Arbeitspaket> setVorgaengerInListe(Arbeitspaket arbeitspaket, Arbeitspaket arbeitspaket2, Arbeitspaket arbeitspaket3) {
-        this.vorgaengerliste.add(arbeitspaket);
-        this.vorgaengerliste.add(arbeitspaket2);
-        this.vorgaengerliste.add(arbeitspaket3);
-        return vorgaengerliste;
-    }
-
-
 }
