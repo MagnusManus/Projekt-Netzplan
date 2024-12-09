@@ -7,6 +7,8 @@ public class Arbeitspaket implements Serializable {
     private Netzplan netzplan;
     private int FAZ;
     private int FEZ;
+    private int SAZ;
+    private int SEZ;
     private int id;
     private String name;
     private int dauer;
@@ -49,10 +51,26 @@ public class Arbeitspaket implements Serializable {
     public void setFEZ() {
         FEZ = FAZ + dauer;
     }
+
     public void setFEZ(int fez) {
         this.FEZ = fez;
     }
 
+    public int getSAZ() {
+        return SAZ;
+    }
+
+    public int getSEZ() {
+        return SEZ;
+    }
+
+    public void setSAZ(int SAZ) {
+        this.SAZ = SAZ;
+    }
+
+    public void setSEZ(int SEZ) {
+        this.SEZ = SEZ;
+    }
 
 
 //---------------------------------------------------------------------------------------Konstruktor---
@@ -67,6 +85,7 @@ public class Arbeitspaket implements Serializable {
     public String toString() {
         return String.format("Name:\t\t%s%nDauer:\t\t%d%n", name, dauer);
     }
+
 
     public String includingList() {
         if (vorgaengerliste.isEmpty()) {
@@ -102,10 +121,8 @@ public class Arbeitspaket implements Serializable {
         this.FEZ = this.FAZ + this.dauer;
     }
 
-    public void berechneNetzplan() {
-        for (Arbeitspaket arbeitspaket : arbeitspaketeListe) {
-            arbeitspaket.berechneFAZundFEZ();
-        }
+    public void berechneSAZundSEZ() {
+
     }
 
 
@@ -114,3 +131,6 @@ public class Arbeitspaket implements Serializable {
 
 
 }
+
+
+

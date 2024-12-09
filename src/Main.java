@@ -62,20 +62,34 @@ public class Main {
                     System.out.printf("Es werden noch %d Eingaben erwartet..." + "\n", anzahlVorgaenger - i);
                     String vorgaenger = sc.nextLine();
 
-                    for (Arbeitspaket value : arbeitspaketeListe) {
+                    for (Arbeitspaket ap : arbeitspaketeListe) {
 
-                        if (vorgaenger.equals(value.getName())) {
-                            nextArbeitspaket.getVorgaengerliste().add(value);
+                        if (vorgaenger.equals(ap.getName())) {
+                            nextArbeitspaket.getVorgaengerliste().add(ap);
                         }
                     }
                 }
                 System.out.println(nextArbeitspaket.toString() + nextArbeitspaket.includingList());
             } else {
+                System.out.println("Berechnung des Netzplans wird durchgeführt...");
+                berechneNetzplan();
+                System.out.println("Alle Arbeitspakete mit berechneten FAZ und FEZ:");
+                for (Arbeitspaket ap : arbeitspaketeListe) {
+                    System.out.printf("Name: %s%nFAZ: %d" + "\t" + "FEZ: %d%n" + ap.includingList(), ap.getName(), ap.getFAZ(), ap.getFEZ());
+                }
+
                 System.out.println("Alle Arbeitspakete wurden erstellt. Viel Glück. Das Programm wird beendet...");
                 break;
             }
         }
     }
+
+    public void berechneNetzplan() {
+        for (Arbeitspaket arbeitspaket : arbeitspaketeListe) {
+            arbeitspaket.berechneFAZundFEZ();
+        }
+    }
+
 }
 
 
