@@ -1,7 +1,5 @@
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.InputMismatchException;
-import java.util.Scanner;
 
 public class Arbeitspaket implements Serializable {
     private Netzplan netzplan;
@@ -12,8 +10,8 @@ public class Arbeitspaket implements Serializable {
     private int id;
     private String name;
     private int dauer;
-    private ArrayList<Arbeitspaket> vorgaengerliste = new ArrayList<>();
-    private static ArrayList<Arbeitspaket> arbeitspaketeListe = new ArrayList();
+    private ArrayList<Arbeitspaket> nachfolgerListe;
+    private ArrayList<Arbeitspaket> vorgaengerliste;
 
     //--------------------------------------------------------------------------------------Getter und Setter
     public String getName() {
@@ -34,6 +32,10 @@ public class Arbeitspaket implements Serializable {
 
     public ArrayList<Arbeitspaket> getVorgaengerliste() {
         return vorgaengerliste;
+    }
+
+    public ArrayList<Arbeitspaket> getNachfolgerListe() {
+        return nachfolgerListe;
     }
 
     public int getFAZ() {
@@ -77,6 +79,7 @@ public class Arbeitspaket implements Serializable {
 
     public Arbeitspaket() {
         this.vorgaengerliste = new ArrayList<>();
+        this.nachfolgerListe = new ArrayList<>();
     }
 
     //------------------------------------------------------------------------------
@@ -110,7 +113,9 @@ public class Arbeitspaket implements Serializable {
         } else {
             // Der FAZ ist das höchste FEZ aller Vorgänger
             int maxFEZ = 0;
+            //wird mit 0 initialisiert, um überschreibbar zu sein
             for (Arbeitspaket vorgaenger : vorgaengerliste) {
+                //maxFEZ wird nur dann neu zugewiesen, wenn ein VorgängerFEZ größer als der vorherige ist
                 if (vorgaenger.getFEZ() > maxFEZ) {
                     maxFEZ = vorgaenger.getFEZ();
                 }
@@ -121,16 +126,35 @@ public class Arbeitspaket implements Serializable {
         this.FEZ = this.FAZ + this.dauer;
     }
 
-    public void berechneSAZundSEZ() {
 
+
+    public void berechneSAZundSEZ() {
+        if (nachfolgerListe.isEmpty()) {
+            this.SAZ = this.FAZ;
+            this.SEZ = this.FEZ;
+        } else {
+            int minSAZ = 100;
+            for (Arbeitspaket nachfolger : nachfolgerListe) {
+                if (nachfolger.getSAZ() < minSAZ) {
+                    minSAZ = nachfolger.getSAZ();
+                }
+            }
+            this.SEZ = minSAZ;
+            this.SAZ = this.SEZ - this.dauer;
+        }
+    }
     }
 
+//letzes ap -> SEZ = FEZ
+//          -> SAZ = SEZ - Dauer
+//          maximum der SAZ der nachfolger = SEZ von ap
+//
 
 
 
 
 
-}
+
 
 
 

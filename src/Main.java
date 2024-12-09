@@ -66,6 +66,9 @@ public class Main {
 
                         if (vorgaenger.equals(ap.getName())) {
                             nextArbeitspaket.getVorgaengerliste().add(ap);
+                            ap.getNachfolgerListe().add(nextArbeitspaket);
+                            System.out.printf("Vorgänger %s wurde zu %s hinzugefügt.%n", ap.getName(), nextArbeitspaket.getName());
+                            System.out.printf("Nachfolger %s wurde zu %s hinzugefügt.%n", nextArbeitspaket.getName(), ap.getName());
                         }
                     }
                 }
@@ -75,7 +78,7 @@ public class Main {
                 berechneNetzplan();
                 System.out.println("Alle Arbeitspakete mit berechneten FAZ und FEZ:");
                 for (Arbeitspaket ap : arbeitspaketeListe) {
-                    System.out.printf("Name: %s%nFAZ: %d" + "\t" + "FEZ: %d%n" + ap.includingList(), ap.getName(), ap.getFAZ(), ap.getFEZ());
+                    System.out.printf("Name: %s%nFAZ: %d" + "\t" + "FEZ: %d%nSAZ: %d" + "\t" + "SEZ: %d%n" + ap.includingList(), ap.getName(), ap.getFAZ(), ap.getFEZ(), ap.getSAZ(), ap.getSEZ());
                 }
 
                 System.out.println("Alle Arbeitspakete wurden erstellt. Viel Glück. Das Programm wird beendet...");
@@ -88,8 +91,12 @@ public class Main {
         for (Arbeitspaket arbeitspaket : arbeitspaketeListe) {
             arbeitspaket.berechneFAZundFEZ();
         }
-    }
+        for (int i = arbeitspaketeListe.size() - 1; i >= 0; i--) {
+            arbeitspaketeListe.get(i).berechneSAZundSEZ();
 
+        }
+    }
 }
+
 
 
