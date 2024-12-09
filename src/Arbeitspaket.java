@@ -7,9 +7,10 @@ public class Arbeitspaket implements Serializable {
     private int FEZ;
     private int SAZ;
     private int SEZ;
-    private int id;
     private String name;
     private int dauer;
+    private int gesamtpuffer;
+    private int freierPuffer;
     private ArrayList<Arbeitspaket> nachfolgerListe;
     private ArrayList<Arbeitspaket> vorgaengerliste;
 
@@ -89,7 +90,6 @@ public class Arbeitspaket implements Serializable {
         return String.format("Name:\t\t%s%nDauer:\t\t%d%n", name, dauer);
     }
 
-
     public String includingList() {
         if (vorgaengerliste.isEmpty()) {
             return String.format("Das Arbeitspaket %s hat keine Vorgänger.\n", this.name);
@@ -126,8 +126,6 @@ public class Arbeitspaket implements Serializable {
         this.FEZ = this.FAZ + this.dauer;
     }
 
-
-
     public void berechneSAZundSEZ() {
         if (nachfolgerListe.isEmpty()) {
             this.SAZ = this.FAZ;
@@ -143,7 +141,16 @@ public class Arbeitspaket implements Serializable {
             this.SAZ = this.SEZ - this.dauer;
         }
     }
+
+    public void berechneGesamtpuffer() {
+        // GP = FolgeSAZmin - FEZ
+        // SAZ - FAZ || SEZ - FEZ
     }
+
+    public void berechneFreienPuffer() {}
+        // FP = FolgeFAZmin - FEZ
+        // FAZ Nachfolger - FEZ Aktuell
+}
 
 //letzes ap -> SEZ = FEZ
 //          -> SAZ = SEZ - Dauer
