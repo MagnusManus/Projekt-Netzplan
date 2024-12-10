@@ -159,20 +159,20 @@ public class Arbeitspaket implements Serializable {
     }
 
     public void berechneGesamtpuffer() {
-            int gesamtpuffer = this.SAZ - this.FAZ;
-            this.setGesamtpuffer(gesamtpuffer);
+        int gesamtpuffer = this.SAZ - this.FAZ;
+        this.setGesamtpuffer(gesamtpuffer);
     }
 
     public void berechneFreienPuffer(ArrayList<Arbeitspaket> arbeitspaketeliste) {
         int minFAZ = 100;
         for (Arbeitspaket ap : arbeitspaketeliste) {
-            ap.getNachfolgerListe();
-            for (Arbeitspaket nachfolger : nachfolgerListe) {
-                if (nachfolger.getFAZ() > minFAZ) {
-                    minFAZ = nachfolger.getFAZ();
+                for (Arbeitspaket nachfolger : nachfolgerListe) {
+                    if (nachfolger.getFAZ() < minFAZ) {
+                        minFAZ = nachfolger.getFAZ();
+                    }
                 }
-            }
-            this.freierPuffer = minFAZ;
+
+            this.freierPuffer = minFAZ - this.FEZ;
         }
     }
 }

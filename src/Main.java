@@ -98,6 +98,7 @@ public class Main {
         }
         for (Arbeitspaket ap : arbeitspaketeListe) {
             ap.berechneGesamtpuffer();
+            ap.berechneFreienPuffer(arbeitspaketeListe);
         }
 
     }
