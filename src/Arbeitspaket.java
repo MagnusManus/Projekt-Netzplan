@@ -163,19 +163,22 @@ public class Arbeitspaket implements Serializable {
         this.setGesamtpuffer(gesamtpuffer);
     }
 
-    public void berechneFreienPuffer(ArrayList<Arbeitspaket> arbeitspaketeliste) {
-        int minFAZ = 100;
-        for (Arbeitspaket ap : arbeitspaketeliste) {
-                for (Arbeitspaket nachfolger : nachfolgerListe) {
-                    if (nachfolger.getFAZ() < minFAZ) {
-                        minFAZ = nachfolger.getFAZ();
-                    }
+    public void berechneFreienPuffer() {
+        if (nachfolgerListe.isEmpty()) {
+            this.freierPuffer = 0;
+        } else {
+            int minFAZ = 100;
+            for (Arbeitspaket nachfolger : nachfolgerListe) {
+                if (nachfolger.getFAZ() < minFAZ) {
+                    minFAZ = nachfolger.getFAZ();
                 }
-
+            }
             this.freierPuffer = minFAZ - this.FEZ;
         }
     }
 }
+
+
 
 
 
