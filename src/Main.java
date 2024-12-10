@@ -1,11 +1,10 @@
-import java.lang.reflect.Array;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.InputMismatchException;
 import java.util.Scanner;
 
 public class Main {
     private Netzplan netzplan;
+    NpE npE;
     private Scanner sc;
     private String name;
     private int dauer;
@@ -21,19 +20,19 @@ public class Main {
 
     public Main() {
         netzplan = new Netzplan();
-
+        npE = new NpE();
         arbeitspaketeListe = new ArrayList<>();
 
         sc = new Scanner(System.in);
 
         while (true) {
-            System.out.println("Bitte geben Sie den Namen des Arbeitspakets ein.");
-            String chkname = sc.nextLine();
+            npE.getTextField().setText("Bitte geben Sie den Namen des Arbeitspakets ein.");
+            String chkname = npE.getTextField().getText();
             if (chkname.trim() != "") {
                 name = chkname;
                 break;
             } else {
-                System.out.println("Feld darf nicht leer sein!");
+                npE.getTextField().setText("Feld darf nicht leer sein!");
             }
 
         }
@@ -107,7 +106,7 @@ public class Main {
 
                     } catch (InputMismatchException e) {
                         System.out.println("Bitte geben sie eine ->Zahl<- ein");
-                        sc.nextLine();
+                        npE.getTextField().setText(sc.nextLine());
                     }
                 }
                 sc.nextLine();
@@ -116,9 +115,9 @@ public class Main {
                 while (chkSize) {
                     for (int i = 0; i < anzahlVorgaenger; i++) {
 
-                        System.out.println("Von WELCHEN Arbeitspaketen hängt dieses ab?");
+                        npE.getTextField().setText("Von WELCHEN Arbeitspaketen hängt dieses ab?");
 
-                        System.out.printf("Es werden noch %d Eingaben erwartet..." + "\n", anzahlVorgaenger - i);
+                        npE.getTextField().setText(String.format("Es werden noch %d Eingaben erwartet..." + "\n", anzahlVorgaenger - i));
                         String vorgaenger = sc.nextLine();
 
                         for (Arbeitspaket ap : arbeitspaketeListe) {
@@ -126,8 +125,8 @@ public class Main {
                             if (vorgaenger.equals(ap.getName())) {
                                 nextArbeitspaket.getVorgaengerliste().add(ap);
                                 ap.getNachfolgerListe().add(nextArbeitspaket);
-                                System.out.printf("Vorgänger %s wurde zu %s hinzugefügt.%n", ap.getName(), nextArbeitspaket.getName());
-                                System.out.printf("Nachfolger %s wurde zu %s hinzugefügt.%n", nextArbeitspaket.getName(), ap.getName());
+                                npE.getTextField().setText(String.format("Vorgänger %s wurde zu %s hinzugefügt.%n", ap.getName(), nextArbeitspaket.getName()));
+                                npE.getTextField().setText(String.format("Nachfolger %s wurde zu %s hinzugefügt.%n", nextArbeitspaket.getName(), ap.getName()));
 
                             }
                             if (anzahlVorgaenger == nextArbeitspaket.getVorgaengerliste().size()) {
