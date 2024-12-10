@@ -5,6 +5,7 @@ import java.util.InputMismatchException;
 import java.util.Scanner;
 
 public class Main {
+    private Netzplan netzplan;
     private Scanner sc;
     private String name;
     private int dauer;
@@ -19,6 +20,8 @@ public class Main {
 
 
     public Main() {
+        netzplan = new Netzplan();
+
         arbeitspaketeListe = new ArrayList<>();
 
         sc = new Scanner(System.in);
@@ -163,6 +166,13 @@ public class Main {
             ap.berechneFreienPuffer();
         }
 
+        StringBuilder sb = new StringBuilder();
+        for (Arbeitspaket ap : arbeitspaketeListe) {
+            sb.append(String.format(
+                    "FAZ: %s\t\tFEZ: %s%n\tVorgang: %s%nDauer: %d\tGP: %d\tFP: %d%nSAZ: %d\t\tSEZ: %d%n------------------------------------------------------%n", ap.getFAZ(), ap.getFEZ(), ap.getName(), ap.getDauer(), ap.getGesamtpuffer(), ap.getFreierPuffer(), ap.getSAZ(), ap.getSEZ()
+            ));
+        }
+        netzplan.setTextToScrollPane(sb.toString());
     }
 }
 
