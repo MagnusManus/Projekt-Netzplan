@@ -75,6 +75,22 @@ public class Arbeitspaket implements Serializable {
         this.SEZ = SEZ;
     }
 
+    public int getGesamtpuffer() {
+        return gesamtpuffer;
+    }
+
+    public void setGesamtpuffer(int gesamtpuffer) {
+        this.gesamtpuffer = gesamtpuffer;
+    }
+
+    public int getFreierPuffer() {
+        return freierPuffer;
+    }
+
+    public void setFreierPuffer(int freierPuffer) {
+        this.freierPuffer = freierPuffer;
+    }
+
 
 //---------------------------------------------------------------------------------------Konstruktor---
 
@@ -143,19 +159,25 @@ public class Arbeitspaket implements Serializable {
     }
 
     public void berechneGesamtpuffer() {
-        // GP = FolgeSAZmin - FEZ
-        // SAZ - FAZ || SEZ - FEZ
+            int gesamtpuffer = this.SAZ - this.FAZ;
+            this.setGesamtpuffer(gesamtpuffer);
     }
 
-    public void berechneFreienPuffer() {}
-        // FP = FolgeFAZmin - FEZ
-        // FAZ Nachfolger - FEZ Aktuell
+    public void berechneFreienPuffer(ArrayList<Arbeitspaket> arbeitspaketeliste) {
+        int minFAZ = 100;
+        for (Arbeitspaket ap : arbeitspaketeliste) {
+            ap.getNachfolgerListe();
+            for (Arbeitspaket nachfolger : nachfolgerListe) {
+                if (nachfolger.getFAZ() > minFAZ) {
+                    minFAZ = nachfolger.getFAZ();
+                }
+            }
+            this.freierPuffer = minFAZ;
+        }
+    }
 }
 
-//letzes ap -> SEZ = FEZ
-//          -> SAZ = SEZ - Dauer
-//          maximum der SAZ der nachfolger = SEZ von ap
-//
+
 
 
 

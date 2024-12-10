@@ -9,6 +9,8 @@ public class Main {
     private int dauer;
     private int anzahlVorgaenger;
     private ArrayList<Arbeitspaket> arbeitspaketeListe;
+    public static final String ANSI_GREEN = "\u001B[32m";
+    public static final String ANSI_RESET = "\u001B[0m";
 
     public static void main(String[] args) {
         new Main();
@@ -74,11 +76,11 @@ public class Main {
                 }
                 System.out.println(nextArbeitspaket.toString() + nextArbeitspaket.includingList());
             } else {
-                System.out.println("Berechnung des Netzplans wird durchgeführt...");
+                System.out.println("Berechnung des Netzplans wird durchgeführt..." + "\n");
                 berechneNetzplan();
-                System.out.println("Alle Arbeitspakete mit berechneten FAZ und FEZ:");
+                System.out.println("Alle Arbeitspakete berechnet:" + "\n");
                 for (Arbeitspaket ap : arbeitspaketeListe) {
-                    System.out.printf("Name: %s%nFAZ: %d" + "\t" + "FEZ: %d%nSAZ: %d" + "\t" + "SEZ: %d%n" + ap.includingList(), ap.getName(), ap.getFAZ(), ap.getFEZ(), ap.getSAZ(), ap.getSEZ());
+                    System.out.printf(ANSI_GREEN + "FAZ: %s\t\t\t\t\t\t\tFEZ: %s%n\t\tVorgang: %s%n\tDauer: %d\tGP: %d\t\tFP: %d%nSAZ: %d\t\t\t\t\t\t\tSEZ: %d%n-----------------------------------------------%n" + ANSI_RESET, ap.getFAZ(), ap.getFEZ(), ap.getName(), ap.getDauer(), ap.getGesamtpuffer(), ap.getFreierPuffer(), ap.getSAZ(), ap.getSEZ());
                 }
 
                 System.out.println("Alle Arbeitspakete wurden erstellt. Viel Glück. Das Programm wird beendet...");
@@ -93,8 +95,11 @@ public class Main {
         }
         for (int i = arbeitspaketeListe.size() - 1; i >= 0; i--) {
             arbeitspaketeListe.get(i).berechneSAZundSEZ();
-
         }
+        for (Arbeitspaket ap : arbeitspaketeListe) {
+            ap.berechneGesamtpuffer();
+        }
+
     }
 }
 
