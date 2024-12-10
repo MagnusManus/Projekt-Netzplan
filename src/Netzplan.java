@@ -1,30 +1,13 @@
-import java.io.*;
-import java.util.ArrayList;
+import javax.swing.*;
 
 public class Netzplan {
-    private ArrayList<Arbeitspaket> listeDerArbeitspakete = new ArrayList<>();
+    private JFrame frame;
 
     public Netzplan() {
 
+        frame = new JFrame("Netzplan");
+        frame.setLocationRelativeTo(null);
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+
     }
-
-
-    public void arbeitspaketeAbrufen() {
-        ArrayList<Arbeitspaket> listeDerArbeitsPakete = null;
-        try
-                (FileInputStream fis = new FileInputStream("/home/manuelpalluotto/Downloads/arbeitspaket");
-                 ObjectInputStream ois = new ObjectInputStream(fis);) {
-            listeDerArbeitsPakete = (ArrayList) ois.readObject();
-        } catch (IOException ioe) {
-            ioe.printStackTrace();
-        } catch (ClassNotFoundException e) {
-            System.out.println("Class not found");
-            e.printStackTrace();
-        }
-        for (Arbeitspaket ap : listeDerArbeitsPakete) {
-            System.out.println(ap.getName() + ap.getDauer() + ap.getVorgaengerliste());
-        }
-    }
-
-
 }
