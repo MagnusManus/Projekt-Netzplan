@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.InputMismatchException;
 import java.util.Scanner;
 
-public class Main implements InputHandler{
+public class Main implements InputHandler {
     private Netzplan netzplan;
     private NpE npE;
     private String name;
@@ -26,47 +26,21 @@ public class Main implements InputHandler{
         npE = new NpE(this);
         arbeitspaketeListe = new ArrayList<>();
 
-        while (true) {
-            npE.getAusgabe().setText("Bitte geben Sie den Namen des Arbeitspakets ein.");
-            String chkname = wartenAufEingabe();
-            if (!chkname.trim().isEmpty()) {
-                name = chkname;
-                break;
-            } else {
-                npE.getAusgabe().setText("Feld darf nicht leer sein!");
-            }
-
-        }
-
-        Arbeitspaket arbeitspaket = new Arbeitspaket();
-
-        arbeitspaket.setName(name);
-
-        while (true) {
-            npE.getAusgabe().setText("Bitte geben Sie die Dauer des Arbeitspakets ein.");
-            try {
-                arbeitspaket.setDauer(Integer.parseInt(npE.getEingabe().getText()));
-                break;
-            } catch (InputMismatchException e) {
-                npE.getAusgabe().setText("Bitte geben sie eine ->Zahl<- ein");
-            }
-        }
-
-
-        arbeitspaketeListe.add(arbeitspaket);
-
-        npE.getAusgabe().setText(arbeitspaket.toString());
-
-
+//        while (true) {
+//            npE.getAusgabe().setText("Bitte geben Sie die Dauer des Arbeitspakets ein.");
+//            try {
+//                arbeitspaket.setDauer(Integer.parseInt(npE.getEingabe().getText()));
+//                break;
+//            } catch (InputMismatchException e) {
+//                npE.getAusgabe().setText("Bitte geben sie eine ->Zahl<- ein");
+//            }
+//        }
         while (true) {
             System.out.println("Gibt es weitere Arbeitspakete? (j / n)");
             String check = npE.getEingabe().getText();
             if (check.equals("j")) {
-
                 Arbeitspaket nextArbeitspaket = new Arbeitspaket();
                 arbeitspaketeListe.add(nextArbeitspaket);
-
-
                 while (true) {
                     System.out.println("Bitte geben Sie den Namen des Arbeitspakets ein.");
                     String chkname = npE.getEingabe().getText();
@@ -77,8 +51,6 @@ public class Main implements InputHandler{
                         System.out.println("Feld darf nicht leer sein!");
                     }
                 }
-
-
                 while (true) {
                     try {
                         System.out.println("Bitte geben Sie die Dauer des Arbeitspakets ein.");
@@ -88,8 +60,6 @@ public class Main implements InputHandler{
                         System.out.println("Bitte geben sie eine ->Zahl<- ein");
                     }
                 }
-
-
                 while (true) {
                     try {
                         System.out.printf("Von wie vielen Arbeitspaketen (Vorgänger) hängt %s ab? -> Zahl muss kleinergleich Anzahl bisheriger Arbeitspakete sein!" + "\n", nextArbeitspaket.getName());
@@ -180,58 +150,58 @@ public class Main implements InputHandler{
     }
 
 
-
-
-
-
     public void handlingInput(String input) {
 
         Arbeitspaket nextArbeitspaket = new Arbeitspaket();
+        arbeitspaketeListe.add(nextArbeitspaket);
 
 
         switch (step) {
             case 0:
-                name = input;
+                nextArbeitspaket.setName(input);
                 npE.getAusgabe().setText(name + " wurde als Name gespeichert.");
                 break;
             case 2:
-                dauer = Integer.parseInt(input);
+                nextArbeitspaket.setDauer(Integer.parseInt(input));
                 npE.getAusgabe().setText(dauer + "wurde als Dauer in Tagen festgelegt.");
                 break;
             case 3:
                 anzahlVorgaenger = Integer.parseInt(input);
                 if (anzahlVorgaenger == 0) {
-                    step++;
+                    step = 4;
                 } else {
                     npE.getAusgabe().setText("Von welchen Arbeitspaketen ist dieses abhängig?");
-                    for (int i = 0; i < anzahlVorgaenger; i++) {
+                    break;
+                }
+            case 4:
+                for (int i = 0; i < anzahlVorgaenger; i++) {
 
-                        npE.getAusgabe().setText("Noch " + (anzahlVorgaenger - i) + " Eingaben erwartet...");
-                        String vorgaenger = npE.getEingabe().getText();
+                    npE.getAusgabe().setText("Noch " + (anzahlVorgaenger - i) + " Eingaben erwartet...");
+                    String vorgaenger = npE.getEingabe().getText();
 
-                        for (Arbeitspaket ap : arbeitspaketeListe) {
+                    for (Arbeitspaket ap : arbeitspaketeListe) {
 
-                            if (vorgaenger.equals(ap.getName())) {
-                                nextArbeitspaket.getVorgaengerliste().add(ap);
-                                ap.getNachfolgerListe().add(nextArbeitspaket);
-                                npE.getAusgabe().setText(String.format("Vorgänger %s wurde zu %s hinzugefügt.%n", ap.getName(), nextArbeitspaket.getName()));
-                                npE.getAusgabe().setText(String.format("Nachfolger %s wurde zu %s hinzugefügt.%n", nextArbeitspaket.getName(), ap.getName()));
+                        if (vorgaenger.equals(ap.getName())) {
+                            nextArbeitspaket.getVorgaengerliste().add(ap);
+                            ap.getNachfolgerListe().add(nextArbeitspaket);
+                            npE.getAusgabe().setText(String.format("Vorgänger %s wurde zu %s hinzugefügt.%n", ap.getName(), nextArbeitspaket.getName()));
+                            npE.getAusgabe().setText(String.format("Nachfolger %s wurde zu %s hinzugefügt.%n", nextArbeitspaket.getName(), ap.getName()));
 
-                            }
-                            if (anzahlVorgaenger == nextArbeitspaket.getVorgaengerliste().size()) {
-                                break;
-                            }
+                        }
+                        if (anzahlVorgaenger == nextArbeitspaket.getVorgaengerliste().size()) {
+                            break;
                         }
                     }
                 }
-                break;
-            case 4:
 
+                break;
+            case 5:
         }
+
     }
 
     public void updatePrompt() {
-        switch(step) {
+        switch (step) {
             case 0:
                 npE.getAusgabe().setText("Bitte geben Sie den Namen des Arbeitspaketes ein.");
                 break;
