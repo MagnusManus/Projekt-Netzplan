@@ -178,6 +178,41 @@ public class Arbeitspaket implements Serializable {
     }
 }
 
+/*
+* public void berechneNetzplan () {
+            for (Arbeitspaket arbeitspaket : arbeitspaketeListe) {
+                arbeitspaket.berechneFAZundFEZ();
+            }
+            for (int i = arbeitspaketeListe.size() - 1; i >= 0; i--) {
+                arbeitspaketeListe.get(i).berechneSAZundSEZ();
+            }
+            for (Arbeitspaket ap : arbeitspaketeListe) {
+                ap.berechneGesamtpuffer();
+                ap.berechneFreienPuffer();
+            }
+
+            StringBuilder sb = new StringBuilder();
+            for (Arbeitspaket ap : arbeitspaketeListe) {
+                sb.append(String.format("FAZ: %s\t\tFEZ: %s%n\tVorgang: %s%nDauer: %d\tGP: %d\tFP: %d%nSAZ: %d\t\tSEZ: %d%n------------------------------------------------------%n", ap.getFAZ(), ap.getFEZ(), ap.getName(), ap.getDauer(), ap.getGesamtpuffer(), ap.getFreierPuffer(), ap.getSAZ(), ap.getSEZ()));
+            }
+            netzplan.setTextToScrollPane(sb.toString());
+        }
+*
+*
+*
+*
+*
+*
+*
+*
+*
+*
+*
+*
+*
+*
+* */
+
 
 
 

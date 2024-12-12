@@ -7,31 +7,14 @@ public class NpE {
     private JFrame frame;
     private JPanel panel;
     private JTextField eingabe;
-    private JTextField ausgabe;
+    private JLabel ausgabe;
     private Dimension screensize;
     private int width;
     private int height;
-    private final ActionListener inputListener;
     private boolean inputFlag;
 
 
     public NpE(Main main) {
-        inputListener = new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                inputFlag = true;
-
-
-                // Hole den Text aus dem Textfeld
-                String benutzerEingabe = eingabe.getText();
-
-                main.handlingInput(eingabe.getText().trim());
-
-                // Setze das Feld leer und resette das Flag
-                eingabe.setText("");
-                resetInputFlag();
-            }
-        };
 
         screensize = Toolkit.getDefaultToolkit().getScreenSize();
         width = screensize.width / 2;
@@ -48,16 +31,27 @@ public class NpE {
         eingabe.setBounds(width / 2- 300, height / 2 - 75, 600, 75);
         eingabe.setBackground(Color.LIGHT_GRAY);
         eingabe.setFont(new Font(Font.SANS_SERIF, Font.BOLD, 22));
-        eingabe.addActionListener(inputListener);
         eingabe.requestFocusInWindow();
 
 
-        ausgabe = new JTextField();
+        ausgabe = new JLabel();
         ausgabe.setBounds(width / 2- 300, (height / 2) - 150, 600, 75);
-        ausgabe.setEditable(false);
         ausgabe.setBackground(Color.LIGHT_GRAY);
         ausgabe.setFont(new Font(Font.SANS_SERIF, Font.BOLD, 22));
 
+        eingabe.addActionListener(new ActionListener() { // Trigger bei Enter
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                // Hole die Benutzereingabe aus dem Textfeld
+                String benutzerEingabe = eingabe.getText().trim(); // Entferne führende/trailing Leerzeichen
+
+                // Übergibt die Eingabe an `Main`, um sie dort zu verarbeiten
+                main.handlingInput(benutzerEingabe);
+
+                // Eingabetextfeld leeren
+                eingabe.setText("");
+            }
+        });
 
         frame.add(eingabe);
         frame.add(ausgabe);
@@ -65,31 +59,13 @@ public class NpE {
         frame.setVisible(true);
     }
 
-    public JFrame getFrame() {
-        return frame;
-    }
-
     public JTextField getEingabe() {
         return eingabe;
     }
 
-    public JTextField getAusgabe() {
+    public JLabel getAusgabe() {
         return ausgabe;
     }
 
-
-
-
-    public boolean isInputReady() {
-        return inputFlag;
-    }
-
-    public String getInputText() {
-        return eingabe.getText();
-    }
-
-    public boolean resetInputFlag() {
-        return inputFlag = false;
-    }
 
 }
