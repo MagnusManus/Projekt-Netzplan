@@ -1,8 +1,6 @@
-import swing.InputHandler;
-
 import java.util.ArrayList;
 
-public class Main implements InputHandler {
+public class Main {
     private Netzplan netzplan;
     private NpE npE; // Benutzeroberfläche
     private ArrayList<Arbeitspaket> arbeitspaketeListe; // Liste der Arbeitspakete
