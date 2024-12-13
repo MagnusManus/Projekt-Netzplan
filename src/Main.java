@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import java.util.InputMismatchException;
 
 public class Main {
     private Netzplan netzplan;
@@ -28,6 +29,9 @@ public class Main {
         try {
             switch (step) {
                 case 0: // Initialer Schritt: Neues Arbeitspaket erstellen und Name festlegen
+                    if (input.trim().equalsIgnoreCase("exit")) {
+                        System.exit(0);
+                    }
                     nextArbeitspaket = new Arbeitspaket();
                     arbeitspaketeListe.add(nextArbeitspaket);
                     nextArbeitspaket.setName(input);
@@ -81,12 +85,16 @@ public class Main {
                 case 4:// Schritt 5: Weitere Arbeitspakete erstellen?
                     System.out.println("Text wird gesetzt");
                     provisorischeAusgabe();
-                    if (input.trim().equals("j")) {
-                        npE.getAusgabe().setText("Bitte geben Sie den Namen des nächsten Arbeitspakets ein:");
-                        step = 0; // Beginne von vorne
-                    } else {
-                        npE.getAusgabe().setText("Berechnung des Netzplans wird gestartet...");
-                        berechneNetzplan();
+                    try {
+                        if (input.trim().equalsIgnoreCase("j")) {
+                            npE.getAusgabe().setText("Bitte geben Sie den Namen des nächsten Arbeitspakets ein:");
+                            step = 0; // Beginne von vorne
+                        } else if (input.trim().equalsIgnoreCase("n")){
+                            npE.getAusgabe().setText("Berechnung des Netzplans wird gestartet...");
+                            berechneNetzplan();
+                        }
+                    }catch (InputMismatchException e) {
+                        npE.getAusgabe().setText("Es werden nur 'j' oder 'n' akzeptiert.");
                     }
                     break;
 
