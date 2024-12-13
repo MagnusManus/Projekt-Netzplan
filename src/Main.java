@@ -1,4 +1,5 @@
 import swing.InputHandler;
+
 import java.util.ArrayList;
 
 public class Main implements InputHandler {
@@ -6,7 +7,6 @@ public class Main implements InputHandler {
     private NpE npE; // Benutzeroberfläche
     private ArrayList<Arbeitspaket> arbeitspaketeListe; // Liste der Arbeitspakete
     private int step; // Iterator für Schritte
-    private int vorgaengerIndex; // Index für Vorgänger
     private int anzahlVorgaenger; // Anzahl der Vorgänger
     private Arbeitspaket nextArbeitspaket; // Das aktuelle Arbeitspaket
 
@@ -17,13 +17,13 @@ public class Main implements InputHandler {
     public Main() {
         // Initialisiere Variablen
         step = 0;
-        vorgaengerIndex = 0;
         arbeitspaketeListe = new ArrayList<>();
         netzplan = new Netzplan();
         npE = new NpE(this);
 
         // Initiale Benutzerausgabe
         npE.getAusgabe().setText("Bitte geben Sie den Namen des ersten Arbeitspakets ein:");
+        berechneNetzplan();
     }
 
     public void handlingInput(String input) {
@@ -34,7 +34,7 @@ public class Main implements InputHandler {
                     arbeitspaketeListe.add(nextArbeitspaket);
                     nextArbeitspaket.setName(input);
                     step++; // Gehe zu Schritt 1
-                    npE.getAusgabe().setText("Bitte geben Sie die Dauer (in Tagen) ein:");
+                    npE.getAusgabe().setText("Bitte geben Sie die Dauer ein:");
                     break;
 
                 case 1: // Schritt 1: Dauer eingeben
@@ -50,8 +50,8 @@ public class Main implements InputHandler {
                         npE.getAusgabe().setText("Bitte geben Sie die Namen der Vorgänger ein:");
                         step++;
                     } else {
-                        npE.getAusgabe().setText("Keine Vorgänger. Arbeitspaket abgeschlossen.");
-                        step = 5; // Gehe direkt zu Schritt 5
+                        npE.getAusgabe().setText("Keine Vorgänger. Arbeitspaket abgeschlossen. Möchten Sie weitere Arbeitspakete erstellen?");
+                        step += 2;
                     }
                     break;
 
@@ -69,17 +69,14 @@ public class Main implements InputHandler {
                     if (!found) {
                         npE.getAusgabe().setText("Vorgänger nicht gefunden. Bitte erneut eingeben.");
                     } else {
-                        vorgaengerIndex++;
-                        if (vorgaengerIndex == anzahlVorgaenger) {
-                            npE.getAusgabe().setText("Möchten Sie weitere Arbeitspakete erstellen?");
-                            step = 5; // Weiter mit Schritt 5
-                        }
+                        npE.getAusgabe().setText("Möchten Sie weitere Arbeitspakete erstellen?");
+                        step++; // Weiter mit Schritt 5
                     }
                     break;
 
-                case 5:// Schritt 5: Weitere Arbeitspakete erstellen?
-                    npE.getAusgabe().setText("Möchten Sie weitere Arbeitspakete erstellen?");
-                    if (input.equals("j")) {
+                case 4:// Schritt 5: Weitere Arbeitspakete erstellen?
+                    System.out.println("Text wird gesetzt");
+                    if (input.trim().equals("j")) {
                         npE.getAusgabe().setText("Bitte geben Sie den Namen des nächsten Arbeitspakets ein:");
                         step = 0; // Beginne von vorne
                     } else {
@@ -97,7 +94,7 @@ public class Main implements InputHandler {
         }
     }
 
-    public void berechneNetzplan () {
+    public void berechneNetzplan() {
         for (Arbeitspaket arbeitspaket : arbeitspaketeListe) {
             arbeitspaket.berechneFAZundFEZ();
         }
