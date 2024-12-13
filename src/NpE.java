@@ -7,7 +7,7 @@ public class NpE {
     private JFrame frame;
     private JPanel panel;
     private JTextField eingabe;
-    private JLabel ausgabe;
+    private JTextArea ausgabe;
     private Dimension screensize;
     private int width;
     private int height;
@@ -28,16 +28,20 @@ public class NpE {
 
 
         eingabe = new JTextField();
-        eingabe.setBounds(width / 2- 300, height / 2 - 75, 600, 75);
+        eingabe.setBounds(width / 2- 300, height / 2 - 75, 600, 55);
         eingabe.setBackground(Color.LIGHT_GRAY);
         eingabe.setFont(new Font(Font.SANS_SERIF, Font.BOLD, 22));
         eingabe.requestFocusInWindow();
 
 
-        ausgabe = new JLabel();
-        ausgabe.setBounds(width / 2- 300, (height / 2) - 150, 600, 75);
+        ausgabe = new JTextArea();
+        ausgabe.setBounds(width / 2- 300, (height / 2) - 150, 600, 55);
         ausgabe.setBackground(Color.LIGHT_GRAY);
-        ausgabe.setFont(new Font(Font.SANS_SERIF, Font.BOLD, 22));
+        ausgabe.setFont(new Font(Font.SANS_SERIF, Font.BOLD, 16));
+        ausgabe.setLineWrap(true);
+        ausgabe.setWrapStyleWord(true);
+        ausgabe.setEditable(false);
+
 
         eingabe.addActionListener(new ActionListener() { // Trigger bei Enter
             @Override
@@ -63,7 +67,7 @@ public class NpE {
         return eingabe;
     }
 
-    public JLabel getAusgabe() {
+    public JTextArea getAusgabe() {
         return ausgabe;
     }
 
